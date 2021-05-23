@@ -1,10 +1,13 @@
 package com.example.eventos;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -44,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         listViewEventos.setAdapter(adapterEventos);
 
         definirOnClickListenerListView();
+        excluirOnClickListenerListView();
     }
 
     private void definirOnClickListenerListView(){
@@ -91,5 +95,27 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "Evento Editado", Toast.LENGTH_LONG).show();
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void excluirOnClickListenerListView(){
+        listViewEventos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
+            @Override
+            public boolean onItemLongClick(AdapterView<?> av, View v, int position, long id)
+            {
+                Evento eventoClicado = adapterEventos.getItem(position);
+                new AlertDialog.Builder(av.getContext())
+                        .setTitle("EXCLUIR EVENTO")
+                        .setMessage("Deseja excluir o evento " + eventoClicado.getNome() + "?")
+                        .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                adapterEventos.remove(eventoClicado);
+                            }
+                        })
+                        .setNegativeButton("Não", null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+                return true;
+            }
+        });
     }
 }
