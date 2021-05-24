@@ -6,9 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.text.TextWatcher;
+import android.widget.Toast;
 
 import com.example.eventos.modelo.Evento;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CadastroEventoActivity extends AppCompatActivity {
@@ -25,7 +29,11 @@ public class CadastroEventoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cadastro_evento);
         setTitle("Cadastro de Evento");
 
+        EditText editTextData = findViewById(R.id.editTextDate_data);
+        TextWatcher textWatcher = MaskEditUtil.mask(editTextData, MaskEditUtil.FORMAT_DATE);
+        editTextData.addTextChangedListener(textWatcher);
         carregarEvento();
+
     }
 
     private void carregarEvento() {
@@ -54,24 +62,42 @@ public class CadastroEventoActivity extends AppCompatActivity {
 
         String nome = editTextNome.getText().toString();
         String local = editTextLocal.getText().toString();
-        String data = editTextData.getText().toString();
+        String dataString = editTextData.getText().toString();
+        /*DateFormat formatar = new SimpleDateFormat("dd-MM-yyyy");
+        Date data = formatar.parse(dataString);*/
 
-
-        Evento evento = new Evento(id,nome, local, data);
-        Intent intent = new Intent();
-        if (edicao) {
-            intent.putExtra("eventoEditado", evento);
-            setResult(RESULT_CODE_EVENTO_EDITADO, intent);
-        } else {
-            intent.putExtra("novoEvento", evento);
-            setResult(RESULT_CODE_NOVO_EVENTO, intent);
+        if (!validarCampo(nome)) {
+            mostrarErro(editTextNome);
+        }else if(!validarCampo(local)) {
+            mostrarErro(editTextLocal);
+        }else if(!validarCampo(dataString)) {
+        mostrarErro(editTextData);
+        }else{
+            Evento evento = new Evento(id, nome, local, dataString);
+            Intent intent = new Intent();
+            if (edicao) {
+                intent.putExtra("eventoEditado", evento);
+                setResult(RESULT_CODE_EVENTO_EDITADO, intent);
+            } else {
+                intent.putExtra("novoEvento", evento);
+                setResult(RESULT_CODE_NOVO_EVENTO, intent);
+            }
+            finish();
         }
-
-        finish();
-
     }
 
 
+    private boolean validarCampo(String campo){
+        if (campo.equals("")){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    private void mostrarErro(EditText editText){
+        editText.setError("Campo obrigatório");
+    }
 }
 
 
