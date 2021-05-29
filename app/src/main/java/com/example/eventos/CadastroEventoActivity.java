@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.text.TextWatcher;
 import android.widget.Toast;
 
+import com.example.eventos.database.EventoDAO;
 import com.example.eventos.modelo.Evento;
 
 import java.text.DateFormat;
@@ -16,10 +17,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CadastroEventoActivity extends AppCompatActivity {
-    private final int RESULT_CODE_NOVO_EVENTO = 10;
-    private final int RESULT_CODE_EVENTO_EDITADO = 11;
-
-    private boolean edicao = false;
+//    private final int RESULT_CODE_NOVO_EVENTO = 10;
+//    private final int RESULT_CODE_EVENTO_EDITADO = 11;
+//
+//    private boolean edicao = false;
     private int id = 0;
 
 
@@ -46,7 +47,7 @@ public class CadastroEventoActivity extends AppCompatActivity {
             editTextNome.setText(evento.getNome());
             editTextLocal.setText(String.valueOf(evento.getLocal()));
             editTextData.setText(String.valueOf(evento.getData()));
-            edicao = true;
+ //         edicao = true;
             id = evento.getId();
         }
     }
@@ -74,16 +75,21 @@ public class CadastroEventoActivity extends AppCompatActivity {
         mostrarErro(editTextData);
         }else{
             Evento evento = new Evento(id, nome, local, dataString);
-            Intent intent = new Intent();
-            if (edicao) {
-                intent.putExtra("eventoEditado", evento);
-                setResult(RESULT_CODE_EVENTO_EDITADO, intent);
-            } else {
-                intent.putExtra("novoEvento", evento);
-                setResult(RESULT_CODE_NOVO_EVENTO, intent);
+//            Intent intent = new Intent();
+//            if (edicao) {
+//                intent.putExtra("eventoEditado", evento);
+//                setResult(RESULT_CODE_EVENTO_EDITADO, intent);
+//            } else {
+            EventoDAO produtoDao = new EventoDAO(getBaseContext());
+            boolean salvou = produtoDao.salvar(evento);
+            if(salvou){
+                finish();
+            }else {
+                Toast.makeText(CadastroEventoActivity.this, "Erro ao salvar", Toast.LENGTH_LONG).show();
             }
-            finish();
-        }
+
+            }
+
     }
 
 
