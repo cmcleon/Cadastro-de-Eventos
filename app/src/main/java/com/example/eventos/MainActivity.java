@@ -100,7 +100,15 @@ public class MainActivity extends AppCompatActivity {
                         .setMessage("Deseja excluir o evento " + eventoClicado.getNome() + "?")
                         .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                adapterEventos.remove(eventoClicado);
+                                EventoDAO eventoDAO = new EventoDAO(getBaseContext());
+                                boolean excluiu = eventoDAO.Excluir(eventoClicado);
+                                if(excluiu){
+                                    adapterEventos.remove(eventoClicado);
+                                }else {
+                                    dialog.dismiss();
+                                    Toast.makeText(MainActivity.this, "Erro ao excluir", Toast.LENGTH_LONG).show();
+                                }
+
                             }
                         })
                         .setNegativeButton("Não", null)

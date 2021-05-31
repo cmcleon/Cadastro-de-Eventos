@@ -80,8 +80,8 @@ public class CadastroEventoActivity extends AppCompatActivity {
 //                intent.putExtra("eventoEditado", evento);
 //                setResult(RESULT_CODE_EVENTO_EDITADO, intent);
 //            } else {
-            EventoDAO produtoDao = new EventoDAO(getBaseContext());
-            boolean salvou = produtoDao.salvar(evento);
+            EventoDAO eventoDAO = new EventoDAO(getBaseContext());
+            boolean salvou = eventoDAO.salvar(evento);
             if(salvou){
                 finish();
             }else {
