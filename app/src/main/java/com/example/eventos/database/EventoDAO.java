@@ -48,7 +48,20 @@ public class EventoDAO {
         return eventos;
     }
 
+    public boolean Excluir(Evento evento){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(EventoEntity.COLUMN_NAME, evento.getNome());
+        contentValues.put(EventoEntity.COLUMN_LOCAL, evento.getLocal());
+        contentValues.put(EventoEntity.COLUMN_DATA, evento.getData());
+        if (evento.getId() > 0){
+            return dbGateway.getDatabase().delete(EventoEntity.TABLE_NAME,
+                    EventoEntity._ID + "=?",
+                    new String[]{String.valueOf(evento.getId())}) >0;
+        }
+        return dbGateway.getDatabase().insert(EventoEntity.TABLE_NAME,
+                null, contentValues) > 0;
 
+    }
 
 
 

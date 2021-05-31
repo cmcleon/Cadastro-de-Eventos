@@ -21,10 +21,10 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
-   // private final int REQUEST_CODE_NOVO_EVENTO = 1;
-   //private final int RESULT_CODE_NOVO_EVENTO = 10;
-   // private final int REQUEST_CODE_EDITAR_EVENTO = 2;
-   // private final int RESULT_CODE_EVENTO_EDITADO = 11;
+    // private final int REQUEST_CODE_NOVO_EVENTO = 1;
+    //private final int RESULT_CODE_NOVO_EVENTO = 10;
+    // private final int REQUEST_CODE_EDITAR_EVENTO = 2;
+    // private final int RESULT_CODE_EVENTO_EDITADO = 11;
 
 
     private ListView listViewEventos;
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-        public void onClickNovoEvento(View v){
+    public void onClickNovoEvento(View v){
         Intent intent = new Intent(MainActivity.this, CadastroEventoActivity.class);
         startActivity(intent);
     }
@@ -100,7 +100,15 @@ public class MainActivity extends AppCompatActivity {
                         .setMessage("Deseja excluir o evento " + eventoClicado.getNome() + "?")
                         .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                adapterEventos.remove(eventoClicado);
+                                EventoDAO eventoDAO = new EventoDAO(getBaseContext());
+                                boolean excluiu = eventoDAO.Excluir(eventoClicado);
+                                if(excluiu){
+                                    adapterEventos.remove(eventoClicado);
+                                }else {
+                                    dialog.dismiss();
+                                    Toast.makeText(MainActivity.this, "Erro ao excluir", Toast.LENGTH_LONG).show();
+                                }
+
                             }
                         })
                         .setNegativeButton("Não", null)
