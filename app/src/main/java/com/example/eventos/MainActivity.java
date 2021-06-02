@@ -118,4 +118,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void onClickCategorias(View v){
+        Intent intent = new Intent(MainActivity.this, ListarCategoriaActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

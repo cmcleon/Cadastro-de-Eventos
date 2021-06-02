@@ -15,6 +15,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="Nome do Evento"
+        android:textColor="#000000"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,6 +40,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
         android:text="Local do Evento"
+        android:textColor="#000000"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText_nome" />
 
@@ -63,6 +67,8 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="16dp"
         android:text="Data do Evento"
+        android:textColor="#000000"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText_local" />
@@ -83,24 +89,32 @@
         android:id="@+id/btn_voltar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="30dp"
-        android:backgroundTint="#3F51B5"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="50dp"
+        android:backgroundTint="#62A9E1"
+        android:drawableLeft="@android:drawable/ic_menu_revert"
+        android:drawableTint="#000000"
         android:onClick="onClickVoltar"
         android:text="Voltar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_salvar" />
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDate_data" />
 
     <Button
         android:id="@+id/btn_salvar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="30dp"
-        android:backgroundTint="#4CAF50"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="80dp"
+        android:backgroundTint="#6BC86F"
+        android:drawableEnd="@android:drawable/ic_menu_save"
+        android:drawableTint="#000000"
         android:onClick="onClickSalvar"
         android:text="Salvar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDate_data" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -53,6 +53,6 @@ public class Evento implements Serializable {
     @NonNull
     @Override
     public String toString() {
-        return nome + '\n' + local+ " - " + data;
+        return nome + '\n' + "Local: " + local+ '\n' + "Data: " + data;
     }
 }
