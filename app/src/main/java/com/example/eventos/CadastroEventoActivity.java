@@ -74,7 +74,7 @@ public class CadastroEventoActivity extends AppCompatActivity {
         }else if(!validarCampo(dataString)) {
         mostrarErro(editTextData);
         }else{
-            Evento evento = new Evento(id, nome, local, dataString);
+            Evento evento = new Evento(id, nome, local, dataString, null);
 //            Intent intent = new Intent();
 //            if (edicao) {
 //                intent.putExtra("eventoEditado", evento);

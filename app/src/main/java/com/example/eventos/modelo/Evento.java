@@ -10,12 +10,14 @@ public class Evento implements Serializable {
     private String nome;
     private String local;
     private String data;
+    private Categoria categoria;
 
-    public Evento(int id, String nome, String local, String data) {
+    public Evento(int id, String nome, String local, String data, Categoria categoria) {
         this.id = id;
         this.nome = nome;
         this.local = local;
         this.data = data;
+        this.categoria = categoria;
     }
 
     public int getId() {
@@ -48,6 +50,14 @@ public class Evento implements Serializable {
 
     public void setData(String data) {
         this.data = data;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 
     @NonNull
