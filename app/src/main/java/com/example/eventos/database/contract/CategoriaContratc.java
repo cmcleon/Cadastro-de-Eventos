@@ -8,8 +8,12 @@ public final class CategoriaContratc {
 
     public static final String criarTabela(){
        return "CREATE TABLE " + CategoriaEntity.TABLE_NAME + " (" +
-       CategoriaEntity._ID + " INTEGER PRIMARY KEY, " +
-       CategoriaEntity.COLLUMN_NAME_DESCRICAO + " TEXT)";
+       CategoriaEntity._ID + " INTEGER PRIMARY KEY," +
+       CategoriaEntity.COLLUMN_NAME_LOCAL_CAT + " TEXT," +
+               CategoriaEntity.COLLUMN_NAME_BAIRRO + " TEXT," +
+               CategoriaEntity.COLLUMN_NAME_CIDADE + " TEXT," +
+               CategoriaEntity.COLLUMN_NAME_PUBLICO + " INT)";
+
     }
 
     public static final String removerTabela(){

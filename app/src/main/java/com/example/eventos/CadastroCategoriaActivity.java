@@ -6,19 +6,19 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.eventos.database.Entity.CategoriaDAO;
 import com.example.eventos.modelo.Categoria;
-import com.example.eventos.modelo.Evento;
 
 public class CadastroCategoriaActivity extends AppCompatActivity {
 
     private int id = 0;
-    private EditText editTextDescricao;
+    private EditText editTextNomeLocal;
+    private EditText editTextBairro;
+    private EditText editTextCidade;
+    private EditText editTextPublico;
 
 
     @SuppressLint("WrongViewCast")
@@ -27,7 +27,10 @@ public class CadastroCategoriaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_categoria);
         setTitle("Cadastro de Categoria");
-        editTextDescricao = findViewById(R.id.DescricaoCategoria);
+        editTextNomeLocal = findViewById(R.id.editTextNomeLocal);
+        editTextBairro = findViewById(R.id.editTextBairro);
+        editTextCidade = findViewById(R.id.editTextCidade);
+        editTextPublico = findViewById(R.id.editTextPublico);
         carregarCategoria();
     }
 
@@ -36,7 +39,14 @@ public class CadastroCategoriaActivity extends AppCompatActivity {
         if (intent != null && intent.getExtras() != null &&
                 intent.getExtras().get("categoriaEdicao") != null) {
             Categoria categoria = (Categoria) intent.getExtras().get("categoriaEdicao");
-            editTextDescricao.setText(categoria.getDescricao());
+            EditText editTextNomeLocal = findViewById(R.id.editTextNomeLocal);
+            EditText editTextBairro = findViewById(R.id.editTextBairro);
+            EditText editTextCidade = findViewById(R.id.editTextCidade);
+            EditText editTextPublico = findViewById(R.id.editTextPublico);
+            editTextNomeLocal.setText(categoria.getNomeLocal());
+            editTextBairro.setText(categoria.getBairro());
+            editTextCidade.setText(categoria.getCidade());
+            editTextPublico.setText(Integer.toString(categoria.getPublico()));
             id = categoria.getId();
         }
     }
@@ -46,8 +56,11 @@ public class CadastroCategoriaActivity extends AppCompatActivity {
     }
 
     public void onClickSalvar(View v) {
-        String descricao = editTextDescricao.getText().toString();
-        Categoria categoria = new Categoria(id, descricao);
+        String nomeLocal = editTextNomeLocal.getText().toString();
+        String bairro = editTextBairro.getText().toString();
+        String cidade = editTextCidade.getText().toString();
+        String publico = editTextPublico.getText().toString();
+        Categoria categoria = new Categoria(id, nomeLocal, bairro, cidade, Integer.parseInt(publico));
         CategoriaDAO categoriaDAO = new CategoriaDAO(getBaseContext());
         boolean salvou = categoriaDAO.salvar(categoria);
         if(salvou){

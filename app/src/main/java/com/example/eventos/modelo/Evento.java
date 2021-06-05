@@ -1,7 +1,6 @@
 package com.example.eventos.modelo;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import androidx.annotation.NonNull;
 
@@ -63,6 +62,9 @@ public class Evento implements Serializable {
     @NonNull
     @Override
     public String toString() {
-        return nome + '\n' + "Local: " + local+ '\n' + "Data: " + data;
+        return nome + '\n' + "Data: " + data
+                + '\n' + "Local: " + local+ '\n'
+                + "Localidade: " + categoria.getNomeLocal() + '\n';
+
     }
 }

@@ -14,7 +14,7 @@ import java.util.List;
 
 public class EventoDAO {
 
-    private final String SQL_LISTAR_TODOS = "SELECT evento._id, nome, local, data, idcategoria, descricao FROM " +
+    private final String SQL_LISTAR_TODOS = "SELECT evento._id, nome, local, data, idcategoria, nomeLocal, bairro, cidade, publico FROM " +
             EventoEntity.TABLE_NAME +
             " INNER JOIN " + CategoriaEntity.TABLE_NAME + " ON " + EventoEntity. COLUMN_NAME_ID_CATEGORIA +
             " = " + CategoriaEntity.TABLE_NAME + "." + CategoriaEntity._ID;
@@ -49,8 +49,11 @@ public class EventoDAO {
             String local = cursor.getString(cursor.getColumnIndex(EventoEntity.COLUMN_LOCAL));
             String data = cursor.getString(cursor.getColumnIndex(EventoEntity.COLUMN_DATA));
             int idCategoria = cursor.getInt(cursor.getColumnIndex(EventoEntity.COLUMN_NAME_ID_CATEGORIA));
-            String descricao = cursor.getString(cursor.getColumnIndex(CategoriaEntity.COLLUMN_NAME_DESCRICAO));
-            Categoria categoria = new Categoria(idCategoria, descricao);
+            String nomeLocal = cursor.getString(cursor.getColumnIndex(CategoriaEntity.COLLUMN_NAME_LOCAL_CAT));
+            String bairro = cursor.getString(cursor.getColumnIndex(CategoriaEntity.COLLUMN_NAME_BAIRRO));
+            String cidade = cursor.getString(cursor.getColumnIndex(CategoriaEntity.COLLUMN_NAME_CIDADE));
+            String publico = cursor.getString(cursor.getColumnIndex(CategoriaEntity.COLLUMN_NAME_PUBLICO));
+            Categoria categoria = new Categoria(idCategoria, nomeLocal, bairro, cidade, Integer.parseInt(publico));
             eventos.add(new Evento(id, nome, local, data, categoria));
         }
         cursor.close();

@@ -21,7 +21,10 @@ public class CategoriaDAO {
 
     public boolean salvar(Categoria categoria){
         ContentValues contentValues = new ContentValues();
-        contentValues.put(CategoriaEntity.COLLUMN_NAME_DESCRICAO, categoria.getDescricao());
+        contentValues.put(CategoriaEntity.COLLUMN_NAME_LOCAL_CAT, categoria.getNomeLocal());
+        contentValues.put(CategoriaEntity.COLLUMN_NAME_BAIRRO, categoria.getBairro());
+        contentValues.put(CategoriaEntity.COLLUMN_NAME_CIDADE, categoria.getCidade());
+        contentValues.put(CategoriaEntity.COLLUMN_NAME_PUBLICO, categoria.getPublico());
 
         if (categoria.getId() > 0){
             return dbGateway.getDatabase().update(CategoriaEntity.TABLE_NAME,
@@ -38,8 +41,11 @@ public class CategoriaDAO {
         Cursor cursor = dbGateway.getDatabase().rawQuery(SQL_LISTAR_TODOS, null);
         while (cursor.moveToNext()){
             int id = cursor.getInt(cursor.getColumnIndex(CategoriaEntity._ID));
-            String descricao = cursor.getString(cursor.getColumnIndex(CategoriaEntity.COLLUMN_NAME_DESCRICAO));
-            categorias.add(new Categoria(id, descricao));
+            String nomeLocal = cursor.getString(cursor.getColumnIndex(CategoriaEntity.COLLUMN_NAME_LOCAL_CAT));
+            String bairro = cursor.getString(cursor.getColumnIndex(CategoriaEntity.COLLUMN_NAME_BAIRRO));
+            String cidade = cursor.getString(cursor.getColumnIndex(CategoriaEntity.COLLUMN_NAME_CIDADE));
+            String publico = cursor.getString(cursor.getColumnIndex(CategoriaEntity.COLLUMN_NAME_PUBLICO));
+            categorias.add(new Categoria(id, nomeLocal, bairro, cidade, Integer.parseInt(publico)));
         }
         cursor.close();
         return categorias;
@@ -47,7 +53,7 @@ public class CategoriaDAO {
 
     public boolean Excluir(Categoria categoria){
         ContentValues contentValues = new ContentValues();
-        contentValues.put(CategoriaEntity.COLLUMN_NAME_DESCRICAO, categoria.getDescricao());
+        contentValues.put(CategoriaEntity.COLLUMN_NAME_LOCAL_CAT, categoria.getNomeLocal());
 
         if (categoria.getId() > 0){
             return dbGateway.getDatabase().delete(CategoriaEntity.TABLE_NAME,

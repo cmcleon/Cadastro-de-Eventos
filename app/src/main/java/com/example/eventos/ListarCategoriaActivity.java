@@ -65,7 +65,7 @@ public class ListarCategoriaActivity extends AppCompatActivity {
                 Categoria categoriaClicado = adapterCategorias.getItem(position);
                 new AlertDialog.Builder(av.getContext())
                         .setTitle("EXCLUIR CATEGORIA")
-                        .setMessage("Deseja excluir a categoria " + categoriaClicado.getDescricao() + "?")
+                        .setMessage("Deseja excluir a categoria " + categoriaClicado.getNomeLocal() + "?")
                         .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 CategoriaDAO categoriaDAO = new CategoriaDAO(getBaseContext());
