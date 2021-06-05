@@ -78,6 +78,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="2dp"
         android:layout_marginEnd="16dp"
         android:ems="10"
         android:inputType="date"
@@ -85,11 +86,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_data" />
 
+    <Spinner
+        android:id="@+id/spinner_categorias"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_categorias" />
+
     <Button
         android:id="@+id/btn_voltar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
+        android:layout_marginStart="60dp"
         android:layout_marginTop="50dp"
         android:backgroundTint="#62A9E1"
         android:drawableLeft="@android:drawable/ic_menu_revert"
@@ -99,14 +111,14 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDate_data" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner_categorias" />
 
     <Button
         android:id="@+id/btn_salvar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:layout_marginEnd="80dp"
+        android:layout_marginEnd="60dp"
         android:backgroundTint="#6BC86F"
         android:drawableEnd="@android:drawable/ic_menu_save"
         android:drawableTint="#000000"
@@ -115,6 +127,18 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_categorias" />
+
+    <TextView
+        android:id="@+id/textView_categorias"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="30dp"
+        android:text="Categoria de Local"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextDate_data" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
