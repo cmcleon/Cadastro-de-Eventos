@@ -3,12 +3,14 @@ package com.example.eventos;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.text.TextWatcher;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eventos.database.Entity.CategoriaDAO;
@@ -19,6 +21,7 @@ import com.example.eventos.modelo.Evento;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class CadastroEventoActivity extends AppCompatActivity {
 //    private final int RESULT_CODE_NOVO_EVENTO = 10;
@@ -53,11 +56,19 @@ public class CadastroEventoActivity extends AppCompatActivity {
 
     }
 
-    private void carregarCategorias(){
+    private void carregarCategorias() {
         CategoriaDAO categoriaDAO = new CategoriaDAO(getBaseContext());
-        categoriasAdapter = new ArrayAdapter<Categoria>(CadastroEventoActivity.this,
+        /*categoriasAdapter = new ArrayAdapter<Categoria>(CadastroEventoActivity.this,
                 android.R.layout.simple_spinner_item,
                 categoriaDAO.listar());
+        spinnerCategorias.setAdapter(categoriasAdapter);*/
+
+        List<Categoria> categorias = categoriaDAO.listar();
+        categorias.add(0, new Categoria(-1, "Selecione", "", "", 0));
+
+        categoriasAdapter = new ArrayAdapter<Categoria>(CadastroEventoActivity.this,
+                android.R.layout.simple_spinner_item,
+                categorias);
         spinnerCategorias.setAdapter(categoriasAdapter);
     }
 
@@ -102,17 +113,24 @@ public class CadastroEventoActivity extends AppCompatActivity {
         String dataString = editTextData.getText().toString();
         //Categoria categoria =(Categoria) spinnerCategorias.getSelectedItem();
         int posicaoCategoria = spinnerCategorias.getSelectedItemPosition();
-        Categoria categoria =(Categoria) categoriasAdapter.getItem(posicaoCategoria);
+        //Categoria categoria = (Categoria)categoriasAdapter.getItem(posicaoCategoria);
+
         /*DateFormat formatar = new SimpleDateFormat("dd-MM-yyyy");
         Date data = formatar.parse(dataString);*/
 
         if (!validarCampo(nome)) {
             mostrarErro(editTextNome);
+        }else if(!validarCampo(dataString)) {
+            mostrarErro(editTextData);
         }else if(!validarCampo(local)) {
             mostrarErro(editTextLocal);
-        }else if(!validarCampo(dataString)) {
-        mostrarErro(editTextData);
-        }else{
+        }else if(posicaoCategoria == 0) {
+            TextView errorText = (TextView)spinnerCategorias.getSelectedView();
+            errorText.setError("");
+            errorText.setTextColor(Color.RED);
+        }
+        else{
+            Categoria categoria = (Categoria)categoriasAdapter.getItem(posicaoCategoria);
             Evento evento = new Evento(id, nome, local, dataString, categoria);
             EventoDAO eventoDAO = new EventoDAO(getBaseContext());
             boolean salvou = eventoDAO.salvar(evento);

@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.eventos.database.Entity.CategoriaDAO;
+import com.example.eventos.database.EventoDAO;
 import com.example.eventos.modelo.Categoria;
 
 
@@ -68,15 +69,21 @@ public class ListarCategoriaActivity extends AppCompatActivity {
                         .setMessage("Deseja excluir a categoria " + categoriaClicado.getNomeLocal() + "?")
                         .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                CategoriaDAO categoriaDAO = new CategoriaDAO(getBaseContext());
-                                boolean excluiu = categoriaDAO.Excluir(categoriaClicado);
-                                if(excluiu){
-                                    adapterCategorias.remove(categoriaClicado);
+                                EventoDAO eventoDAO =  new EventoDAO(getBaseContext());
+                                if (!eventoDAO.ExisteEventoPorCategoria(categoriaClicado.getId()))
+                                {
+                                    CategoriaDAO categoriaDAO = new CategoriaDAO(getBaseContext());
+                                    boolean excluiu = categoriaDAO.Excluir(categoriaClicado);
+                                    if (excluiu) {
+                                        adapterCategorias.remove(categoriaClicado);
+                                    } else {
+                                        dialog.dismiss();
+                                        Toast.makeText(ListarCategoriaActivity.this, "Erro ao excluir", Toast.LENGTH_LONG).show();
+                                    }
                                 }else {
                                     dialog.dismiss();
-                                    Toast.makeText(ListarCategoriaActivity.this, "Erro ao excluir", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(ListarCategoriaActivity.this, "Não é permitido excluir categoria que já possui evento cadastrado!", Toast.LENGTH_LONG).show();
                                 }
-
                             }
                         })
                         .setNegativeButton("Não", null)

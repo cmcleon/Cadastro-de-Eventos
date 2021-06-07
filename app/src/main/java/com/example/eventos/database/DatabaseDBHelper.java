@@ -12,7 +12,7 @@ import com.example.eventos.database.contract.EventoContract;
 public class DatabaseDBHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "db.evento";
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 6;
 
     public DatabaseDBHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -22,7 +22,6 @@ public class DatabaseDBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CategoriaContratc.criarTabela());
         db.execSQL(EventoContract.criarTabela());
-
     }
 
     @Override

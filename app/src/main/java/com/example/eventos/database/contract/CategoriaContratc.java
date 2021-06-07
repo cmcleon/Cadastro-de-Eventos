@@ -12,7 +12,7 @@ public final class CategoriaContratc {
        CategoriaEntity.COLLUMN_NAME_LOCAL_CAT + " TEXT," +
                CategoriaEntity.COLLUMN_NAME_BAIRRO + " TEXT," +
                CategoriaEntity.COLLUMN_NAME_CIDADE + " TEXT," +
-               CategoriaEntity.COLLUMN_NAME_PUBLICO + " INT)";
+               CategoriaEntity.COLLUMN_NAME_PUBLICO + " INTEGER)";
 
     }
 

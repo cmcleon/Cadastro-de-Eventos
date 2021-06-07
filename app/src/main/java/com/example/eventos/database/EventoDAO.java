@@ -14,10 +14,17 @@ import java.util.List;
 
 public class EventoDAO {
 
-    private final String SQL_LISTAR_TODOS = "SELECT evento._id, nome, local, data, idcategoria, nomeLocal, bairro, cidade, publico FROM " +
+    private final String SQL_LISTAR_TODOS =
+            "SELECT evento._id, nome, local, data, idcategoria, nomeLocal, bairro, cidade, publico FROM " +
             EventoEntity.TABLE_NAME +
-            " INNER JOIN " + CategoriaEntity.TABLE_NAME + " ON " + EventoEntity. COLUMN_NAME_ID_CATEGORIA +
+            " INNER JOIN " + CategoriaEntity.TABLE_NAME + " ON "  + EventoEntity.COLUMN_NAME_ID_CATEGORIA +
             " = " + CategoriaEntity.TABLE_NAME + "." + CategoriaEntity._ID;
+
+    private final String SQL_EVENTO_POR_CATEGORIA =
+            "SELECT _id FROM " +
+                    EventoEntity.TABLE_NAME +
+            " WHERE idcategoria = ?";
+
     private DBGateway dbGateway;
 
     public EventoDAO(Context context){
@@ -42,8 +49,10 @@ public class EventoDAO {
 
     public List<Evento> listar() {
         List<Evento> eventos = new ArrayList<>();
+
         Cursor cursor = dbGateway.getDatabase().rawQuery(SQL_LISTAR_TODOS, null);
-        while (cursor.moveToNext()){
+
+        while (cursor.moveToNext()) {
             int id = cursor.getInt(cursor.getColumnIndex(EventoEntity._ID));
             String nome = cursor.getString(cursor.getColumnIndex(EventoEntity.COLUMN_NAME));
             String local = cursor.getString(cursor.getColumnIndex(EventoEntity.COLUMN_LOCAL));
@@ -56,6 +65,7 @@ public class EventoDAO {
             Categoria categoria = new Categoria(idCategoria, nomeLocal, bairro, cidade, Integer.parseInt(publico));
             eventos.add(new Evento(id, nome, local, data, categoria));
         }
+
         cursor.close();
         return eventos;
     }
@@ -75,6 +85,18 @@ public class EventoDAO {
 
     }
 
+    public boolean ExisteEventoPorCategoria(int idCategoria)
+    {
+        Cursor cursor = dbGateway.getDatabase().rawQuery(SQL_EVENTO_POR_CATEGORIA, new String[]{String.valueOf(idCategoria)});
+
+        boolean existeEvento = cursor.getCount() > 0;
+
+        cursor.close();
+
+        return existeEvento;
+    }
+
 
 
 }
+
